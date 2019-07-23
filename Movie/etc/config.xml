@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation=
+        "urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <Movie>
+            <movie>
+                <yesnofieldabcd>1</yesnofieldabcd><!--1:Yes-0:No-->
+                <textfield>I’m a text field</textfield>
+                <customselectfield>1</customselectfield>
+            </movie>
+        </Movie>
+    </default>
+</config>

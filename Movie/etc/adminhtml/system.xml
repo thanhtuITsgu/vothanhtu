@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation=
+        "urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="Magenest" translate="label" sortOrder="999">
+            <label>Magenest</label>
+        </tab>
+
+        <section id="Movie" translate="label" type="text" sortOrder="200" showInDefault="1">
+            <label>Movie</label>
+            <tab>Magenest</tab>
+            <resource>Magenest_Movie::config_magenest</resource>
+
+            <group id="movie" translate="label" type="text" sortOrder="1" showInDefault="1">
+                <label>Movie</label>
+
+                <field id="textfield" translate="label" type="text" sortOrder="10" showInDefault="1">
+                    <label>Text Field</label>
+                </field>
+
+                <field id="yesnofieldabcd" translate="label" type="select" sortOrder="20" showInDefault="1">
+                    <label><![CDATA[Yes/No_Field_<strong style="color:red">abcd</strong>]]></label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+
+                <field id="customselectfield" translate="label" type="select" sortOrder="30" showInDefault="1">
+                    <label>Custom Select Field</label>
+                    <source_model>Magenest\Movie\Model\Config\Source\Relation</source_model>
+                </field>
+                <field id="magenestmovie" sortOrder="40" type="text" translate="label" showInDefault="1">
+                    <label>Row in table "Magenest_Movie"</label>
+                    <frontend_model>Magenest\Movie\Block\System\Config\Field\Disable</frontend_model>
+                    <backend_model>Magenest\Movie\Model\Config\Backend\Numrowmovie</backend_model>
+                    <depends>
+                        <field id="customselectfield">1</field>
+                    </depends>
+                </field>
+                <field id="magenestactor" sortOrder="45" type="text" translate="label" showInDefault="1">
+                    <label>Row in table "Magenest_Actor"</label>
+                    <backend_model>Magenest\Movie\Model\Config\Backend\Numrowactor</backend_model>
+                    <frontend_model>Magenest\Movie\Block\System\Config\Field\Disable</frontend_model>
+                </field>
+                <field id="buttonreloadpage" sortOrder="50" type="button" translate="label" showInDefault="1">
+                    <frontend_model>Magenest\Movie\Block\System\Config\Form\Button</frontend_model>
+                </field>
+            </group>
+
+        </section>
+    </system>
+</config>

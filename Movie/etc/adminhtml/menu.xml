@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation=
+        "urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+
+        <add id="Magenest_Movie::top_level_movie"
+             title="Movie"
+             module="Magenest_Movie"
+             sortOrder="9999"
+             resource="Magento_Backend::content"
+        />
+        <!-- START: new node -->
+        <add id="Magenest_Movie::second_level_example"
+             title="Second Level Example"
+             module="Magenest_Movie"
+             sortOrder="9999"
+             resource="Magento_Backend::content"
+
+             parent="Magenest_Movie::top_level_movie"
+        />
+        <add id="Magenest_Movie::second_level_example2"
+             title="Movie Infromation"
+             module="Magenest_Movie"
+             sortOrder="9999"
+             resource="Magento_Backend::content"
+
+             parent="Magenest_Movie::top_level_movie"
+        />
+        <!-- END:   new node -->
+        <!-- ... -->
+        <add id="Magenest_Movie::Movie"
+             title="UIcomponent Movie"
+             module="Magenest_Movie"
+             sortOrder="9999"
+             resource="Magento_Backend::content"
+
+             parent="Magenest_Movie::second_level_example2"
+             action="movie/uicomponentmovie"
+        />
+
+        <add id="Magenest_Movie::Actor"
+             title="UIcomponent Actor"
+             module="Magenest_Movie"
+             sortOrder="9999"
+             resource="Magento_Backend::content"
+
+             parent="Magenest_Movie::second_level_example2"
+             action="movie/uicomponentactor"
+        />
+        <add id="Magenest_Movie::Director"
+             title="UIcomponent Director"
+             module="Magenest_Movie"
+             sortOrder="9999"
+             resource="Magento_Backend::content"
+
+             parent="Magenest_Movie::second_level_example2"
+             action="movie/uicomponentdirector"
+        />
+    </menu>
+
+
+</config>

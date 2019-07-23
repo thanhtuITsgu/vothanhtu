@@ -1,0 +1,24 @@
+<div id="movielist">
+    <h2>Movie List</h2>
+    <table>
+        <tr>
+            <th>Movie_Id</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Rating</th>
+            <th>Name_Director</th>
+            <th>Name_Actor</th>
+        </tr>
+        <?php foreach ($block->getMovie() as $contact): ?>
+            <tr>
+                <td><?php echo $contact->getMovie_id(); ?></td>
+                <td><?php echo $contact->getName(); ?></td>
+                <td><?php echo $contact->getDescription(); ?></td>
+                <td><?php echo $contact->getRating(); ?></td>
+                <td><?php echo $contact->getData('nameDirector'); ?></td>
+                <td><?php echo $contact->getData('at.name'); ?></td>
+            </tr>
+        <?php endforeach; ?>
+
+    </table>
+</div>
