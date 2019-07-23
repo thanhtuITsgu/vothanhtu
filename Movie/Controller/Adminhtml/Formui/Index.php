@@ -19,7 +19,7 @@ class Index extends \Magento\Backend\App\Action
              $contact->setDirector_id($this->getRequest()->getParam('director_id'));
              $contact->save();
              $this->messageManager->addSuccess(__('Add Succesful'));
-             $this->_redirect('movie/uicomponentmovie');
+             $this->_redirect('movie/uicomponentmovie') ;
         }
 }
 
