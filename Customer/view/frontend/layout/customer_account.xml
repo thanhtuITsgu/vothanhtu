@@ -1,7 +1,9 @@
-<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd" label="Customer My Account (All Pages)" design_abstraction="custom">
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
    <body>
-        <referenceBlock name="customerdashboard_index_index">
-            <block class="Magenest\Customer\Block\Image" name="Image" template="Acount.phtml"/>
+        <referenceBlock name="customer_account">
+            <referenceContainer name="content">
+            <block class="Magenest\Customer\Block\Image" name="Image" template="Magenest_Customer::acount.phtml"/>
+            </referenceContainer>
         </referenceBlock>
     </body>
 </page>

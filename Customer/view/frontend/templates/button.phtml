@@ -1,0 +1,295 @@
+<style>
+    @import url(https://fonts.googleapis.com/css?family=Roboto:300);
+
+    .login-page {
+        width: 360px;
+        padding: 10% 0 0;
+        margin: auto;
+    }
+
+    .form2 {
+        position: relative;
+        z-index: 1;
+        background: #FFFFFF;
+        max-width: 360px;
+        margin: 0 auto 100px;
+        padding: 45px;
+        text-align: center;
+        box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+        display:inline-block;
+    }
+
+    .form2 input {
+        font-family: "Roboto", sans-serif;
+        outline: 0;
+        background: #f2f2f2;
+        width: 100%;
+        border: 0;
+        margin: 0 0 15px;
+        padding: 15px;
+        box-sizing: border-box;
+        font-size: 14px;
+    }
+
+    .form2 button {
+        font-family: "Roboto", sans-serif;
+        text-transform: uppercase;
+        outline: 0;
+        background: #4CAF50;
+        width: 100%;
+        border: 0;
+        padding: 15px;
+        color: #FFFFFF;
+        font-size: 14px;
+        -webkit-transition: all 0.3 ease;
+        transition: all 0.3 ease;
+        cursor: pointer;
+    }
+
+    .form2 button:hover, .form button:active, .form button:focus {
+        background: #43A047;
+    }
+
+    .form2 .message {
+        margin: 15px 0 0;
+        color: #b3b3b3;
+        font-size: 12px;
+    }
+
+    .form2 .message a {
+        color: #4CAF50;
+        text-decoration: none;
+    }
+
+    .form2 .register-form {
+        display: none;
+    }
+
+    .container {
+        position: relative;
+        z-index: 1;
+        max-width: 300px;
+        margin: 0 auto;
+    }
+
+    .container:before, .container:after {
+        content: "";
+        display: block;
+        clear: both;
+    }
+
+    .container .info {
+        margin: 50px auto;
+        text-align: center;
+    }
+
+    .container .info h1 {
+        margin: 0 0 15px;
+        padding: 0;
+        font-size: 36px;
+        font-weight: 300;
+        color: #1a1a1a;
+    }
+
+    .container .info span {
+        color: #4d4d4d;
+        font-size: 12px;
+    }
+
+    .container .info span a {
+        color: #000000;
+        text-decoration: none;
+    }
+
+    .container .info span .fa {
+        color: #EF3B3A;
+    }
+
+    .body2 {
+        text-align:center;
+        height:auto;
+        background: #F2F2F2;
+        ! *fallback for old browsers *!
+        background: -webkit-linear-gradient(right, #F2F2F2, #8DC26F);
+        background: -moz-linear-gradient(right, #F2F2F2, #8DC26F);
+        background: -o-linear-gradient(right, #F2F2F2, #8DC26F);
+        background: linear-gradient(to left, #F2F2F2, #8DC26F);
+        font-family: "Roboto", sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    .videoWrapper {
+        position: relative;
+        padding-bottom: 56.25%; /* 16:9 */
+        padding-top: 25px;
+        height: 0;
+
+    iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    }
+</style>
+        <!--AREA BUTTON-->
+<div class="actions">
+    <button type="submit"
+            title="Open Model"
+            class="Secondary"
+            id="BT1" onclick="showAlert()">
+        <a href="#"></a>
+        <span>Open Model</span>
+    </button>
+
+    <button type="submit"
+            title="Open Magento Login Modal"
+            class="Secondary"
+            id="BT2">
+        <span>Open Magento Login Modal</span>
+    </button>
+
+    <button type="submit"
+            title="Open Custom Login Modal "
+            class="Primary"
+            id="BT3">
+        <span>Open Custom Login Modal </span>
+    </button>
+
+    <button type="submit"
+            title="YouTuBe"
+            class="Primary"
+            id="BT4">
+        <span>YouTuBe</span>
+    </button>
+</div>
+                                    <!--FROM LOGIN-->
+<div class="body2" id="from">
+    <div class="login-page">
+        <div class="form2">
+            <img src="<?php echo $block->getUrl('pub/media/customer/T/h/').'Therock.jpg'?>" />
+            <form class="login-form">
+                <input type="text" placeholder="username"/>
+                <input type="password" placeholder="password"/>
+                <button>login</button>
+                <p class="message">Not registered? <a href="http://localhost/magento2/customer/account/create/">Create an account</a></p>
+            </form>
+        </div>
+    </div>
+</div>
+
+                                    <!--Youtube-->
+<div id="header-mpdal" style="display:none;">
+    <div class="videoWrapper">
+        <iframe allow="encrypted-media" allowfullscreen="" frameborder="0" gesture="media" height="315" src="https://www.youtube.com/embed/P45AMKIW0ok" width="560">
+        </iframe>
+    </div>
+</div>
+<script>
+    /*SCRIP BINH THUONG*/
+    function showAlert() {
+        alert('Hello THis is My First JavaScript')
+    }
+
+    /*SCRIPT MODAL CONFRIM*/
+    require([
+            'jquery',
+            'Magento_Ui/js/modal/confirm'
+        ],
+        function ($, confirmation) {
+            $('#BT2').on('click', function (event) {
+                confirmation({
+                    title: 'Magento Alert Modal',
+                    content: 'Hello This Is My First Nagento Alert Modal',
+                    actions: {
+                        /**
+                         * Callback always - called on all actions.
+                         */
+                        /*always: function () {alert('Tkank You')},*/ //Cancel or Ok alway excute function.
+
+                        /**
+                         * Callback confirm.
+                         */
+                        confirm: function () {
+                            alert('Tkank You')
+                        },
+
+                        /**
+                         * Callback cancel.
+                         */
+                        cancel: function () {
+                        }
+                    }
+                });
+            });
+        });
+
+    /*SCRIPT MODAL MODAL*/
+    require(
+        [
+            'jquery',
+            'Magento_Ui/js/modal/modal'
+        ],
+        function (
+            $,
+            modal
+        ) {
+            var options = {
+                type: 'popup',
+                title: 'Login Modal',
+                responsive: true,
+                innerScroll: true,
+                buttons: [{
+                    text: $.mage.__('Close'),
+                    click: function () {
+                        this.closeModal();
+                    }
+                }]
+            };
+
+            var popup = modal(options, $('#from'));
+            $("#BT3").on('click', function () {
+                $("#from").modal("openModal");
+            });
+
+        }
+    );
+
+    /*Youtube*/
+    require(
+        [
+            'jquery',
+            'Magento_Ui/js/modal/modal'
+        ],
+        function(
+            $,
+            modal
+        ) {
+            var options = {
+                type: 'popup',
+                title:'YouTuBe',
+                responsive: true,
+                innerScroll: true,
+                buttons: [{
+                    text: $.mage.__('Close'),
+                    click: function () {
+                        this.closeModal();
+                    }
+                }]
+            };
+
+            var popup = modal(options, $('#header-mpdal'));
+            $("#BT4").on('click',function(){
+                $("#header-mpdal").modal("openModal");
+            });
+
+        }
+    );
+
+    $('.message a').click(function () {
+        $('form').animate({height: "toggle", opacity: "toggle"}, "slow");
+    });
+</script>
