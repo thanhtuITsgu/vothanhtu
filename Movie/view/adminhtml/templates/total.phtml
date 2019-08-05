@@ -1,0 +1,25 @@
+ <div class="col-m-4">
+    <h1>Total Module</h1>
+    <h2>Total Module Magento</h2>
+    <?php foreach ($block->getModuleNameMagento() as $Data): ?>
+        <p><strong><?php echo $Data["Total"]; ?></strong></p>
+    <?php endforeach; ?>
+
+    <h2>Total Module Not Magento</h2>
+    <?php foreach ($block->getModuleNameNotMagento() as $Data): ?>
+        <p><strong><?php echo $Data["Total"]; ?></strong></p>
+    <?php endforeach; ?>
+ </div>
+
+ <div class="col-m-4">
+        <h1>Total Synthetic</h1>
+        <table class="admin__table-secondary">
+            <tr><th><?php echo __('Number Of Product') ?></th><td><?php echo $block->getNumberProduct() ?></td></tr>
+            <tr><th><?Php echo __('Number Of Orders') ?></th><td><?php echo $block->getNumberOrder() ?></td></tr>
+            <tr><th><?php echo __('Number Of Invoices')?></th><td><?php echo $block->getNumberInvoices() ?></td></tr>
+            <tr><th><?php echo __('Number Of Creditmemos') ?></th><td><?php echo $block->getNumberCreditmemos() ?></td></tr>
+        </table>
+ </div>
+
+
+

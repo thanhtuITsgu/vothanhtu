@@ -1,8 +1,14 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <!--Table Magenest_Movie-->
 
+    <!--<type name="Magento\Checkout\Controller\Cart\Add">
+        <plugin name="exampleofbefore" type="Magenest\Movie\Plugin\Cart" sortOrder="1" />
+    </type>-->
+    <type name="Magento\Checkout\Model\Cart">
+        <plugin name="Magenest_Movie::add_child_to_cart" type="Magenest\Movie\Model\Cart" sortOrder="1"/>
+    </type>
+    <!--Table Magenest_Movie-->
     <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
         <arguments>
             <argument name="collections" xsi:type="array">

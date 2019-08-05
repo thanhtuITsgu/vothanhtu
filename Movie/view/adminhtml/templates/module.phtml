@@ -1,0 +1,21 @@
+<div>
+<h1>Total Synthetic</h1>
+<div class="col-m-4">
+<table class="admin__table-secondary">
+    <tr><td>Number Of Product</td><td><?php echo $block->getNumberProduct() ?></td></tr>
+    <tr><td>Number Of Orders</td><td><?php echo $block->getNumberOrder() ?></td></tr>
+    <tr><td>Number Of Invoices</td><td><?php echo $block->getNumberInvoices() ?></td></tr>
+    <tr><td>Number Of Creditmemos</td><td><?php echo $block->getNumberCreditmemos() ?></td></tr>
+</table>
+</div>
+    <h1>Total Module</h1>
+<h2>Total Module Magento</h2>
+<?php foreach ($block->getModuleNameMagento() as $Data): ?>
+    <p><strong><?php echo $Data["Total"]; ?></strong></p>
+<?php endforeach; ?>
+
+<h2>Total Module Not Magento</h2>
+<?php foreach ($block->getModuleNameNotMagento() as $Data): ?>
+    <p><strong><?php echo $Data["Total"]; ?></strong></p>
+<?php endforeach; ?>
+</div>

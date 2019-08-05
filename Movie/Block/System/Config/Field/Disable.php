@@ -9,6 +9,5 @@ class Disable extends \Magento\Config\Block\System\Config\Form\Field
     {
         $element->setData('readonly', 1);
         return $element->getElementHtml();
-
     }
 }

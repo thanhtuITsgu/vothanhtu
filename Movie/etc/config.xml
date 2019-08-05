@@ -5,7 +5,7 @@
         <Movie>
             <movie>
                 <yesnofieldabcd>1</yesnofieldabcd><!--1:Yes-0:No-->
-                <textfield>I’m a text field</textfield>
+              <!--  <textfield>I’m a text field</textfield>-->
                 <customselectfield>1</customselectfield>
             </movie>
         </Movie>

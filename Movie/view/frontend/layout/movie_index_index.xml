@@ -10,6 +10,5 @@
         <referenceContainer name="content">
             <block class="Magenest\Movie\Block\Movie" name="movieForm" template="Magenest_Movie::movie.phtml"/>
         </referenceContainer>
-
     </body>
 </page>
