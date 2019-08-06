@@ -15,6 +15,6 @@ class Textfield implements \Magento\Framework\Event\ObserverInterface
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
         $this->_configInterface
-            ->saveConfig('Movie/movie/textfield', 'Pong', 'default', 0);
+            ->saveConfig('Movie/movie/textfield'/*section/groupId/FiledId*/, 'Pong', 'default', 0);
     }
 }

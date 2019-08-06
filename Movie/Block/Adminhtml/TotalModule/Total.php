@@ -22,7 +22,8 @@ class Total extends Template
     public function getModuleNameMagento()
     {
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-        $connection = $this->_resource->getConnection();
+        $resurce=$objectManager->get('Magento\Framework\App\ResourceConnection');
+        $connection = $resurce->getConnection();
         $sql='SELECT count(*) as Total FROM setup_module WHERE module LIKE "Magento%"';
         $result = $connection->fetchAll($sql);
         return $result ;
