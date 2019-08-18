@@ -1,9 +1,18 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
    <body>
-        <referenceBlock name="customer_account">
+     <!--   <referenceBlock name="customer_account">
             <referenceContainer name="content">
             <block class="Magenest\Customer\Block\Image" name="Image" template="Magenest_Customer::acount.phtml"/>
             </referenceContainer>
-        </referenceBlock>
+        </referenceBlock>-->
+
+       <referenceBlock name="customer_account_navigation">
+           <block class="Magento\Framework\View\Element\Html\Link\Current" name="customer-account-navigation-edit">
+               <arguments>
+                   <argument name="path" xsi:type="string">customer/edit</argument>
+                   <argument name="label" xsi:type="string">Edit</argument>
+               </arguments>
+           </block>
+       </referenceBlock>
     </body>
 </page>

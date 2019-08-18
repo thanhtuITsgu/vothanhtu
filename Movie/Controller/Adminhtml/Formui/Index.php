@@ -10,6 +10,7 @@ class Index extends \Magento\Backend\App\Action
             $contact = $this->_objectManager->create('Magenest\Movie\Model\Movie');
             $contact->setData($MovieData)->save();
             $this->getResponse()->setBody('success');*/
+
              $MovieData = $this->getRequest()->getPostValue();
              $contact = $this->_objectManager->create('Magenest\Movie\Model\Movie');
              $contact->setName($this->getRequest()->getParam('name'));

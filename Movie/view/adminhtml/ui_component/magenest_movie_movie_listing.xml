@@ -5,7 +5,7 @@
             <item name="deps" xsi:type="string">magenest_movie_movie_listing.magenest_movie_movie_listing_data_source</item>
 
         </item>
-        <item name="spinner" xsi:type="string">spinner_columns</item>
+        <item name="spinner" xsi:type="string">movie_columns</item>
         <item name="buttons" xsi:type="array">
             <item name="add" xsi:type="array">
                 <item name="name" xsi:type="string">add</item>
@@ -34,16 +34,125 @@
             </argument>
         </argument>
     </dataSource>
+    <!--Phan tren thanh Toolbar-->
+    <listingToolbar name="listing_top">
 
-    <columns name="spinner_columns">
+        <settings>
+            <sticky>true</sticky>
+        </settings>
+
+        <bookmark name="bookmarks"/>
+        <columnsControls name="columns_controls"/>
+        <exportButton name="export_button"/>
+        <filterSearch name="fulltext"/>
+        <filters name="listing_filters"/>
+
+        <massaction name="listing_massaction" component="Magento_Ui/js/grid/tree-massactions">
+
+            <action name="delete">
+                <settings>
+                    <confirm>
+                        <message translate="true">Are you sure to delete selected customers?</message>
+                        <title translate="true">Delete items</title>
+                    </confirm>
+                    <!--<url path="customer/index/massDelete"/>-->
+                    <type>delete</type>
+                    <label translate="true">Delete</label>
+                </settings>
+            </action>
+
+            <action name="status">
+                <settings>
+                    <!--<url path="customer/index/massSubscribe"/>-->
+                    <type>status</type>
+                    <label translate="true">Status</label>
+                    <actions>
+                        <action name="0">
+                            <type>enable</type>
+                            <label translate="true">Enable</label>
+                            <!--<url path="catalog/product/massStatus">
+                                <param name="status">1</param>
+                            </url>-->
+                        </action>
+                        <action name="1">
+                            <type>disable</type>
+                            <label translate="true">Disable</label>
+                            <!--<url path="catalog/product/massStatus">
+                                <param name="status">2</param>
+                            </url>-->
+                        </action>
+                    </actions>
+                </settings>
+            </action>
+
+            <action name="unsubscribe">
+                <settings>
+                    <confirm>
+                        <message translate="true">Are you sure to unsubscribe selected customers from newsletter?</message>
+                        <title translate="true">Unsubscribe from Newsletter</title>
+                    </confirm>
+                    <!--<url path="customer/index/massUnsubscribe"/>-->
+                    <type>unsubscribe</type>
+                    <label translate="true">Unsubscribe from Newsletter</label>
+                </settings>
+            </action>
+
+            <action name="assign_to_group">
+                <settings>
+                    <type>assign_to_group</type>
+                    <label translate="true">Assign a Customer Group</label>
+                    <!--<actions class="Magento\Customer\Ui\Component\MassAction\Group\Options"/>-->
+                </settings>
+            </action>
+
+            <action name="edit">
+                <settings>
+                    <callback>
+                        <target>editSelected</target>
+<!--
+                        <provider>magenest_movie_movie_listing.magenest_movie_movie_listing_data_source</provider>
+-->
+                    </callback>
+                    <type>edit</type>
+                    <label translate="true">Edit</label>
+                </settings>
+            </action>
+
+        </massaction>
+        <paging name="listing_paging"/> <!--Phan dem so dogn , setPageSize, ....-->
+    </listingToolbar>
+    <columns name="movie_columns">
+
+        <settings>
+            <editorConfig>
+                <param name="clientConfig" xsi:type="array">
+                    <item name="saveUrl" xsi:type="url" path="customer/index/inlineEdit"/>
+                    <item name="validateBeforeSave" xsi:type="boolean">false</item>
+                </param>
+                <param name="indexField" xsi:type="string">movie_id</param>
+                <param name="enabled" xsi:type="boolean">true</param>
+
+                <param name="selectProvider" xsi:type="string">magenest_movie_movie_listing.magenest_movie_movie_listing.movie_columns.ids</param>
+
+            </editorConfig>
+            <childDefaults>
+                <param name="fieldAction" xsi:type="array">
+
+                    <item name="provider" xsi:type="string">magenest_movie_movie_listing.magenest_movie_movie_listing.movie_columns_editor</item>
+
+                    <item name="target" xsi:type="string">startEdit</item>
+                    <item name="params" xsi:type="array">
+                        <item name="0" xsi:type="string">${ $.$data.rowIndex }</item>
+                        <item name="1" xsi:type="boolean">true</item>
+                    </item>
+                </param>
+            </childDefaults>
+        </settings>
+
         <selectionsColumn name="ids">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="resizeEnabled" xsi:type="boolean">false</item>
-                    <item name="resizeDefaultWidth" xsi:type="string">55</item>
-                    <item name="indexField" xsi:type="string">movie_id</item>
-                </item>
-            </argument>
+            <settings>
+                <indexField>movie_id</indexField>
+            </settings>
         </selectionsColumn>
         <column name="movie_id">
             <argument name="data" xsi:type="array">

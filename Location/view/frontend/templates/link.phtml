@@ -1,0 +1,137 @@
+<?php $var = $block->getCt()['LtsItem']; ?>
+<?php /*$var2= $block->getDistrict(); */ ?>
+<li><a id="bt"<?php echo $block->getLinkAttributes() ?>><?php echo $block->escapeHtml($block->getLabel()); ?></a></li>
+<!--FROM LOGIN-->
+<div id="location">
+    <form>
+        City:<select type="text" id="city" name="city">
+            <?php foreach ($var as $contact): ?>
+                <option value="<?php echo $contact['ID']; ?>"><?php echo $contact['Title'] ?></option>;
+            <?php endforeach; ?>
+        </select>
+        District:<select type="text" id="District">
+            <option value="">--Please select--</option>
+        </select>
+        Hamlet:<select type="text" id="Village1">
+            <option value="">--Please select--</option>
+        </select>
+        <button type="button" name="Save" id="Save" value="Choose">Choose</button>
+    </form>
+</div>
+
+
+<script >
+    /*SCRIPT MODAL MODAL*/
+    require(
+        [
+            'jquery',
+            'Magento_Ui/js/modal/modal',
+            'domReady!'
+        ],
+        function (
+            $,
+            modal
+        ) {
+            var options = {
+                type: 'popup',
+                title: 'Location Seleted',
+                responsive: true,
+                innerScroll: true,
+                buttons: [{
+                    text: $.mage.__('Close'),
+                    click: function () {
+                        this.closeModal() ;
+                    },
+                }]
+            };
+
+            var popup = modal(options, $('#location'));
+            $("#bt").on('click', function () {
+                alert('hello');
+                $("#location").modal("openModal");
+            });
+
+        }
+    );
+
+    require(['jquery', 'jquery/ui'], function ($) {
+        $(document).ready(function () {
+            $("#city").change(function () {
+                var idcity = $("#city").val();
+                $.ajax({
+                    /*async: false,*/
+                    dataType: "json",
+                    type: "POST",
+                    url: "http://127.0.0.1/magento2b/location/quan/quan",
+                    data: {id: idcity},
+                    cache: false,
+                    success: function (json) {
+                        /*alert(array) ;*/
+                        console.log('content');
+                        var content = JSON.parse(json);
+                        var optionHtml;
+                        for (var val of content) {
+                            optionHtml += '<option value="' + val.ID + '">' + val.Title + '</option>';
+                        }
+                        $('#District').html(optionHtml);
+                        $('#District').focus();
+                    }
+                });
+            });
+        });
+    });
+
+    require(['jquery', 'jquery/ui'], function ($) {
+        $(document).ready(function () {
+            $("#District").change(function () {
+                var idcity = $("#District").val();
+                $.ajax({
+                    /*async: false,*/
+                    dataType: "json",
+                    type: "POST",
+                    url: "http://127.0.0.1/magento2b/location/xa/xa",
+                    data: {id: idcity},
+                    cache: false,
+                    success: function (json) {
+                        /*alert(json) ;*/
+                        console.log('asda0');
+                        var content = JSON.parse(json);
+                        var optionHtml;
+                        for (var val of content) {
+                            optionHtml += '<option value="' + val.ID + '">' + val.Title + '</option>';
+                        }
+                        $('#Village1').html(optionHtml);
+                        $('#Village1').focus();
+                    },
+                    error: function () {
+                        console.log("error");
+                    }
+                });
+            });
+        });
+    });
+
+    require(['jquery', 'jquery/ui', 'Magento_Customer/js/customer-data'], function ($, customerData) {
+        $(document).ready(function () {
+            $("#Save").click(function () {
+                var city = $('#city option:selected').text();
+                var district = $('#District option:selected').text();
+                var village = $('#Village1 option:selected').text();
+
+                $.ajax({
+                    showLoader: true,
+                    type: "POST",
+                    url: "<?php echo $block->getBaseUrl() . 'location/save/save'?>",
+                    data: {City: city, District: district, Village: village},
+                    cache: false,
+                    success: function () {
+                        alert('Success');
+                        location.reload();
+                    },error: function () {
+                        alert('YOU HAVE ERROR');
+                    }
+                });
+            });
+        });
+    });
+</script>

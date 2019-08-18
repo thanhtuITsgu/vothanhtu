@@ -1,0 +1,37 @@
+<div class="row clearfix">
+    <div class="col-md-12 column">
+        <form name="form_height" method="POST" id="form_height">
+            <input type="text" name="height" class="form-control input-md">
+            <input type="text" name="weight" class="form-control input-md">
+            <input type="submit" id="calculateTotalSubmit"  name="calculate-total-submit" value="Calculate Total">
+        </form>
+    </div>
+
+</div>
+
+
+
+<script>
+    require(['jquery'],function(){
+        jQuery(document).ready(function() {
+            jQuery("#form_height").submit(function(){
+
+                var heightValue = jQuery("input[name='height']").val(); //Lay gia tri !!!
+                var weightValue = jQuery("input[name='weight']").val();
+
+                var url = "<?php echo $block->getBaseUrl().'knockout/result/result/' ?>";
+                jQuery.ajax ({
+                    url: url,
+                    type: "POST",
+                    data: {height:heightValue,weight:weightValue},
+                    showLoader: true,
+                    cache: false,
+                    success: function(response){
+                        console.log(response.output);
+                    }
+                });
+                return false;
+            });
+        });
+    });
+</script>

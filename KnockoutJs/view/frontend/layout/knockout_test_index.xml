@@ -5,6 +5,8 @@
         <title>Knockout Js Testing Page</title>
     </head>
     <body>
+        <referenceBlock name="catalog.compare.sidebar" remove="true"/>
+        <referenceBlock name="sidebar.additional" remove="true"/>
         <referenceBlock name="content">
             <block class="Magenest\KnockoutJs\Block\Test" name="knockoutjs_test_block" template="test.phtml">
                 <arguments>

@@ -1,0 +1,36 @@
+<div class="col-md-12 column">
+    <form name="form_customer" method="POST" id="form_customer">
+        First Name:<br>
+        <input type="text" name="fistname" value="<?php echo $block->getFirstname(); ?>">
+        Last Name:<br>
+        <input type="text" name="lastname" value="<?php echo $block->getLastname(); ?>">
+        <input type="hidden" name="id" value="<?php echo $block->getIdcustomer(); ?>">
+        <button type="button" name="editcustomer" id="edit_customer" value="Edit Customer">Edit Customer</button>
+    </form>
+    <p id="notice"></p>
+</div>
+
+<script type="text/javascript">
+    require(['jquery', 'jquery/ui','Magento_Customer/js/customer-data'], function ($,customerData) {
+        $(document).ready(function () {
+            $("#edit_customer").click(function () {
+                alert("Test!");
+                var idcus = $("input[name='id']").val();
+                var fname = $("input[name='fistname']").val();
+                var lname = $("input[name='lastname']").val();
+                $.ajax({
+                    showLoader: true,
+                    type: "POST",
+                    url: "<?php echo $block->getBaseUrl() . 'customer/save/save'?>",
+                    data: {id: idcus, fistname: fname, lastname: lname},
+                    cache: false,
+                    success: function () {
+                        /*customerData.reloadParams();*/
+                        $('#notice').text("success");
+                    }
+                });
+            });
+        });
+    });
+
+</script>

@@ -17,6 +17,7 @@ define([
 
         getProduct: function () {
             var self = this;
+            /*self.query = ko.observable("");*/
             var serviceUrl = urlBuilder.build('knockout/test/product?id='+id); //m2agento/knockout/index/index ;
             id ++;
             return storage.post(

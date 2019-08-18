@@ -5,9 +5,9 @@
     <!--<type name="Magento\Checkout\Controller\Cart\Add">
         <plugin name="exampleofbefore" type="Magenest\Movie\Plugin\Cart" sortOrder="1" />
     </type>-->
-    <type name="Magento\Checkout\Model\Cart">
+    <!--<type name="Magento\Checkout\Model\Cart">
         <plugin name="Magenest_Movie::add_child_to_cart" type="Magenest\Movie\Model\Cart" sortOrder="1"/>
-    </type>
+    </type>-->
     <!--Table Magenest_Movie-->
     <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
         <arguments>

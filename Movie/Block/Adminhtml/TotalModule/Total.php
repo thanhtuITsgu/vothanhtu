@@ -21,29 +21,40 @@ class Total extends Template
 
     public function getModuleNameMagento()
     {
-        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+       /* $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
         $resurce=$objectManager->get('Magento\Framework\App\ResourceConnection');
         $connection = $resurce->getConnection();
         $sql='SELECT count(*) as Total FROM setup_module WHERE module LIKE "Magento%"';
         $result = $connection->fetchAll($sql);
-        return $result ;
-
-       /* $allModules = $this->fullModuleList->getAll();
+        return $result ;*/
+        $string = new \Magento\Framework\Stdlib\StringUtils;
+        $allModules = $this->fullModuleList->getAll();
         $number=null;
         foreach ($allModules as $value)
-        {
-            $number++;
+        {    $name=$string->substr($value['name'],0,7);
+             if($name == 'Magento')
+             $number++;
         }
-        return $number;*/
+        return $number;
     }
 
     public function getModuleNameNotMagento()
     {
-        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+       /* $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
         $connection = $this->_resource->getConnection();
         $sql='SELECT count(*) as Total FROM setup_module WHERE module NOT LIKE "%Magento%"';
         $result = $connection->fetchAll($sql);
-        return $result ;
+        return $result ;*/
+
+        $string = new \Magento\Framework\Stdlib\StringUtils;
+        $allModules = $this->fullModuleList->getAll();
+        $number=null;
+        foreach ($allModules as $value)
+        {    $name=$string->substr($value['name'],0,7);
+            if($name != 'Magento')
+                $number++;
+        }
+        return $number;
     }
 
     public function getNumberCustomer()

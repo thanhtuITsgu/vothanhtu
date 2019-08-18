@@ -26,14 +26,14 @@ class Product extends \Magento\Framework\App\Action\Action
         parent::__construct($context);
     }
 
-    public function getCollection()
+/*    public function getCollection()
     {
         return $this->productFactory->create()
             ->getCollection()
             ->addAttributeToSelect('*')
             ->setPageSize(5)
             ->setCurPage(1);
-    }
+    }*/
 
     public function execute()
     {

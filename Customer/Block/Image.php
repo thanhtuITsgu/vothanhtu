@@ -11,9 +11,10 @@ class Image extends Template
         $customerSession = $objm->get('Magento\Customer\Model\Session');
         if ($customerSession->isLoggedIn()) {
             $customerId = $customerSession->getId();
-         /*   $data = $customerSession->getCustomer()->getAvatar();
-            $productCollection = $objm->create('Magento\Customer\Model\Customer');
-            $collection = $productCollection->load($customerId);*/
+           /* $data = $customerSession->getCustomer()->getAvatar();*/
+         /*   $productCollection = $objm->create('Magento\Customer\Model\Customer');
+            $collection = $productCollection->load($customerId);
+            $collection->getData()->getFirstname();*/
 
 
             $resourch = $objm->create('Magento\Framework\App\ResourceConnection');

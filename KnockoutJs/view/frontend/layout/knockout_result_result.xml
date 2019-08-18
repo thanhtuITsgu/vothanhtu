@@ -1,0 +1,11 @@
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <title>Result</title>
+    </head>
+    <body>
+        <referenceContainer name="content">
+            <block class="Magenest\KnockoutJs\Block\Index" name="result_result" template="Magenest_KnockoutJs::result.phtml" />
+        </referenceContainer>
+    </body>
+</page>

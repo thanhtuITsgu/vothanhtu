@@ -1,14 +1,11 @@
  <div class="col-m-4">
     <h1>Total Module</h1>
     <h2>Total Module Magento</h2>
-    <?php foreach ($block->getModuleNameMagento() as $Data): ?>
-        <p><strong><?php echo $Data["Total"]; ?></strong></p>
-    <?php endforeach; ?>
+        <p><strong><?php echo $block->getModuleNameMagento(); ?></strong></p>
 
     <h2>Total Module Not Magento</h2>
-    <?php foreach ($block->getModuleNameNotMagento() as $Data): ?>
-        <p><strong><?php echo $Data["Total"]; ?></strong></p>
-    <?php endforeach; ?>
+        <p><strong><?php echo $block->getModuleNameNotMagento(); ?></strong></p>
+
  </div>
 
  <div class="col-m-4">
