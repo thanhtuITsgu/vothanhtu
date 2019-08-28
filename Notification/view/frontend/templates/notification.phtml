@@ -1,0 +1,95 @@
+<?php $count = $block->getLabel() ?>
+<?php $test = $block->getViewEd() ?>
+<?php $test2 = $block->getDeleted() ?>
+<?php  $_notification = $block->getCollection(); // get collection which set in block class ?>
+<?php if ($_notification && count($_notification)): ?>
+   <div><span id="count" hidden="hidden"><?= $count?></span></div>
+    <div class="table-wrapper orders-history">
+        <table class="data table table-order-items history" id="my-orders-table">
+            <thead><!--De xuat hien duong gach open <thead>-->
+            <tr>
+                <th scope="col" class="col id" hidden="hidden"><?php echo __('ID #') ?></th>
+                <th scope="col" class="col date"><?php echo __('Date') ?></th>
+                <th scope="col" class="col description"><?php echo __('Short Description') ?></th>
+                <th scope="col" class="col action"><?php echo __('Action') ?></th>
+                <th scope="col" class="col ">&nbsp;</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php  // read collection as magento1.x and display in list
+            foreach ($_notification as $_datarecord): ?>
+                <?php if(in_array($_datarecord->getEntity_id(),$test2)==false): ?>
+                    <?php if(in_array($_datarecord->getEntity_id(),$test)) : ?>
+                <tr>
+                    <td class="col id" id="entity_id" hidden="hidden"><?php echo $_datarecord->getEntity_id() ?></td>
+                    <td class="col date"><?php echo $block->formatDate($_datarecord->getCreated_at()); ?></td>
+                    <td class="col description"><?php echo $_datarecord->getShort_description() ?></td>
+                    <td class="col action"><a href="<?php echo $block->getUrl($_datarecord->getRedirect_url()); ?>">View Detail</a> | <a id="Delete">Delete</a></td>
+                </tr>
+            <?php else : ?>
+                    <tr style="background-color: #faebd7">
+                        <td class="col id" id="entity_id" hidden="hidden"><?php echo $_datarecord->getEntity_id() ?></td>
+                        <td class="col date"><?php echo $block->formatDate($_datarecord->getCreated_at()); ?></td>
+                        <td class="col description"><?php echo $_datarecord->getShort_description() ?></td>
+                        <td class="col action"><a href="<?php echo $block->getUrl($_datarecord->getRedirect_url()); ?>">View Detail</a> | <a id="Mark" >Mark as Read</a> | <a id="Delete">Delete</a></td>
+                    </tr>
+                    <?php endif; ?>
+                <?php endif; ?>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+    <?php if ($block->getPagerHtml()): ?>
+        <div class="order-products-toolbar toolbar bottom"><?php echo $block->getPagerHtml(); // for display pager block which we create in block file.   ?></div>
+    <?php endif ?>
+<?php else: ?>
+    <div class="message info empty"><span><?php echo __('grid records not available.'); ?></span></div>
+<?php endif ?>
+
+<!--<script>
+
+    require([ 'jquery', 'jquery/ui'], function($){
+        $(document).on('click','#Mark', function() {
+            var currentRow=$(this).closest("tr");
+            var idnotification=currentRow.find("#entity_id").text();
+            $.ajax({
+                showLoader: true,
+                type: "POST",
+                url: "<?php /*/*echo $block->getBaseUrl() . 'notification/viewed/viewed'*/?>",
+                data: {Id: idnotification},
+                cache: false,
+                success: function () {
+                    location.reload();
+                }, error: function () {
+                    alert('YOU HAVE ERROR');
+                }
+            });
+        });
+
+        $('strong').each(function (index) {
+            var count = $('#count').text();
+           if($(this).text() === "My Notification")
+           {
+               $(this).html('My Notification'+" "+"<span style='background:orange;border-radius:50%;display:inline-block;width:16px;text-align:center'>"+count+"</span>");
+           }
+        });
+
+        $(document).on('click','#Delete', function() {
+            var currentRow=$(this).closest("tr");
+            var idnotification=currentRow.find("#entity_id").text();
+            $.ajax({
+                showLoader: true,
+                type: "POST",
+                url: "<?php /*/*echo $block->getBaseUrl() . 'notification/delete/delete'*/?>",
+                data: {Id: idnotification},
+                cache: false,
+                success: function () {
+                    location.reload();
+                }, error: function () {
+                    alert('YOU HAVE ERROR');
+                }
+            });
+        });
+    });
+</script>
+-->

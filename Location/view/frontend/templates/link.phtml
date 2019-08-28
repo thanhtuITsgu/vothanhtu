@@ -59,12 +59,10 @@
             $("#city").change(function () {
                 var idcity = $("#city").val();
                 $.ajax({
-                    /*async: false,*/
-                    dataType: "json",
+                     dataType: "json",
                     type: "POST",
                     url: "http://127.0.0.1/magento2b/location/quan/quan",
                     data: {id: idcity},
-                    cache: false,
                     success: function (json) {
                         /*alert(array) ;*/
                         console.log('content');
@@ -75,6 +73,10 @@
                         }
                         $('#District').html(optionHtml);
                         $('#District').focus();
+                    },
+                    error: function(request, status, error){
+                        console.log(request.responseText) ;
+                        console.log(1) ;
                     }
                 });
             });

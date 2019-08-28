@@ -3,7 +3,6 @@
 namespace Magenest\Location\Controller\Save;
 
 use Magento\Backend\App\Action\Context;
-use Magento\Framework\App\Action\Action;
 use Magento\Framework\Stdlib\Cookie\CookieMetadataFactory;
 use Magento\Framework\Stdlib\CookieManagerInterface;
 use Magento\Framework\Session\SessionManagerInterface;
@@ -51,13 +50,17 @@ class Save extends \Magento\Framework\App\Action\Action
         $customerSession = $objectManager->create('Magento\Customer\Model\Session');
         if ($customerSession->isLoggedIn()) {
             $customerId = $customerSession->getId();
-            $customer = $objectManager->create('Magento\Customer\Model\Address')->load($customerId);
-            $customer->setCity($this->getRequest()->getParam('City'));
-            $customer->setRegion($this->getRequest()->getParam('District'));
-            $customer->setStreet($this->getRequest()->getParam('Village'));
-            $customer->save();
+            $customer = $customerSession->getCustomer();
+            $shippingAddress = $customer->getDefaultShippingAddress();;
+            $shippingAddress->setCity($this->getRequest()->getParam('City'));
+            $shippingAddress->setRegion($this->getRequest()->getParam('District'));
+            $shippingAddress->setStreet($this->getRequest()->getParam('Village'));
+            $shippingAddress->save();
         } else {
-            $metadata = $this->_cookieMetadataFactory->createPublicCookieMetadata()->setDuration(self::COOKIE_DURATION)->setPath($this->_sessionManager->getCookiePath())
+            $metadata = $this->_cookieMetadataFactory
+                ->createPublicCookieMetadata()
+                ->setDuration(self::COOKIE_DURATION)
+                ->setPath($this->_sessionManager->getCookiePath())
                 ->setDomain($this->_sessionManager->getCookieDomain());;
             $City = $this->getRequest()->getParam('City');
             $District = $this->getRequest()->getParam('District');

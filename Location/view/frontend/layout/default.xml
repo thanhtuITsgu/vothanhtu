@@ -2,19 +2,19 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
-         <referenceContainer name="header.panel" >
-        <!--<referenceBlock name="header.links">-->
+      <!--   <referenceContainer name="header.panel" >
+        &lt;!&ndash;<referenceBlock name="header.links">&ndash;&gt;
              <container name="header.left.container" >
             <block class="Magenest\Location\Block\Link" name="Add-new-link-location"
                    template="Magenest_Location::link.phtml" cacheable="false"/>
-            <!--<arguments>
+            &lt;!&ndash;<arguments>
                 <argument name="label" xsi:type="string" translate="true">Location</argument>
                 <argument name="path" xsi:type="string" translate="true">#</argument>
-            </arguments>-->
-            <!--</block>-->
+            </arguments>&ndash;&gt;
+            &lt;!&ndash;</block>&ndash;&gt;
             </container>
-        <!--</referenceBlock>-->
-        </referenceContainer>
+        &lt;!&ndash;</referenceBlock>&ndash;&gt;
+        </referenceContainer>-->
         <!-- <referenceBlock name="top.links">
              <block class="Magento\Framework\View\Element\Html\Link" name="top-link">
                  <arguments>
