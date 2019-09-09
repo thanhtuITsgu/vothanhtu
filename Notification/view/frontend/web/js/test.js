@@ -72,7 +72,9 @@ require(
 */
 
 });
-/*
-require(['jquery','jquery/ui','mage/ui'],function ($) {
-    $
+
+/*require(['jquery','jquery/ui','mage/ui'],function ($) {
+    $(document).on('click','#viewed',function () {
+        $.ajax({})
+    })
 });*/

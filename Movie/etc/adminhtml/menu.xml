@@ -6,7 +6,7 @@
         <add id="Magenest_Movie::top_level_movie"
              title="Movie"
              module="Magenest_Movie"
-             sortOrder="9999"
+             sortOrder="20"
              resource="Magento_Backend::content"
         />
         <!-- START: new node -->

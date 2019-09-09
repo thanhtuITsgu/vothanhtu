@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation=
+        "urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+
+        <add id="Magenest_ReviewImport::top_level_movie"
+             title="Review Import"
+             module="Magenest_ReviewImport"
+             sortOrder="25"
+             resource="Magento_Backend::content"
+        />
+        <!-- START: new node -->
+        <add id="Magenest_ReviewImport::second_level_example"
+             title="Second Level Example"
+             module="Magenest_ReviewImport"
+             sortOrder="9999"
+             resource="Magento_Backend::content"
+
+             parent="Magenest_ReviewImport::top_level_movie"
+        />
+        <add id="Magenest_ReviewImport::second_level_example2"
+             title="Review Import"
+             module="Magenest_ReviewImport"
+             sortOrder="9999"
+             resource="Magento_Backend::content"
+
+             parent="Magenest_ReviewImport::top_level_movie"
+        />
+        <!-- END:   new node -->
+        <!-- ... -->
+        <add id="Magenest_ReviewImport::Import"
+             title="Review Import"
+             module="Magenest_ReviewImport"
+             sortOrder="9999"
+             resource="Magento_Backend::content"
+
+             parent="Magenest_ReviewImport::second_level_example2"
+             action="reviewimport/index/index"
+        />
+    </menu>
+
+
+</config>

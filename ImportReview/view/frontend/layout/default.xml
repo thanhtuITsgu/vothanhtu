@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="footer">
+            <container name="footer.columns" htmlTag="div" htmlClass="footer-columns" as="footer-columns" before="-">
+                <block name="footer-links" class="Magento\Cms\Block\Widget\Block" template="Magenest_ImportReview::test.phtml" cacheable="false">
+                    <arguments>
+                        <argument name="block_id" xsi:type="helper" helper="Magenest\ImportReview\Helper\Data::getTitle" />
+                    </arguments>
+                </block>
+            </container>
+        </referenceContainer>
+    </body>
+</page>

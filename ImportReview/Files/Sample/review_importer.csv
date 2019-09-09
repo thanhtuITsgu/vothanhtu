@@ -1,0 +1,4 @@
+id,product_id,sku,email,nickname,title,detail,create_at,status,store_id
+,1,Bag_Women1,yy2y@gmail.com,1231231233,aaaaaaaaaa,123123,08/13/19,1,0
+,5,Bag_Women1,xx2x@gmail.com,Anh Ba Hung,BBBBBBB,32323123,08/13/19,1,0
+,5,Bag_Women1,ho2a@gmail.com,thanh asdasdad,cccccccc,345345345,08/13/19,1,0

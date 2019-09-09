@@ -55,7 +55,7 @@
                         <message translate="true">Are you sure to delete selected customers?</message>
                         <title translate="true">Delete items</title>
                     </confirm>
-                    <!--<url path="customer/index/massDelete"/>-->
+                    <url path="movie/delete/delete"/>
                     <type>delete</type>
                     <label translate="true">Delete</label>
                 </settings>
@@ -126,7 +126,7 @@
         <settings>
             <editorConfig>
                 <param name="clientConfig" xsi:type="array">
-                    <item name="saveUrl" xsi:type="url" path="customer/index/inlineEdit"/>
+                        <item name="saveUrl" xsi:type="url" path="movie/save/save"/>
                     <item name="validateBeforeSave" xsi:type="boolean">false</item>
                 </param>
                 <param name="indexField" xsi:type="string">movie_id</param>
@@ -135,6 +135,7 @@
                 <param name="selectProvider" xsi:type="string">magenest_movie_movie_listing.magenest_movie_movie_listing.movie_columns.ids</param>
 
             </editorConfig>
+
             <childDefaults>
                 <param name="fieldAction" xsi:type="array">
 
@@ -206,7 +207,7 @@
                 </item>
             </argument>
         </column>
-        <column name="director_id">
+        <column name="director_id"><!--class="Magenest\Movie\Ui\Component\Listing\Column\DIrector"-->
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="filter" xsi:type="string">text</item>
