@@ -1,0 +1,11 @@
+id,parent_name,name,sku,description,all_children,available_sort_by,children,children_count,custom_apply_to_products,custom_design,custom_design_from,custom_design_to,custom_layout_update,default_sort_by,display_mode,filter_price_range,image,is_anchor,landing_page,level,meta_description,meta_keywords,meta_title,page_layout,path,path_in_store,url_key,url_path
+1,,Mobiles,Mobiles,<p>asd</p>,,,,,,,,,,,PRODUCTS_AND_PAGE,,black.img,,1,,aaa,bbb,ccc,,,,Mobiles,Mobiles
+2,Mobiles,Samsung,Samsung,<p>asd</p>,,,,,,,,,,,PRODUCTS_AND_PAGE,,black.img,,1,,aaa,bbb,ccc,,,,Samsung,Mobiles/Samsung
+3,Mobiles,Oppo,Oppo,<p>asd</p>,,,,,,,,,,,PRODUCTS_AND_PAGE,,black.img,,1,,aaa,bbb,ccc,,,,Oppo ,Mobiles/Oppo 
+4,Mobiles,Vivo,Vivo,<p>asd</p>,,,,,,,,,,,PRODUCTS_AND_PAGE,,black.img,,1,,aaa,bbb,ccc,,,,Vivo,Mobiles/Vivo
+5,Samsung,Samsung J Pro,Samsung J Pro,<p>asd</p>,,,,,,,,,,,PRODUCTS_AND_PAGE,,black.img,,1,,aaa,bbb,ccc,,,,Samsung J Pro,Mobiles/Samsung/Samsung J Pro
+6,Samsung,Samsung a 10,Samsung a 10,<p>asd</p>,,,,,,,,,,,PRODUCTS_AND_PAGE,,black.img,,1,,aaa,bbb,ccc,,,,Samsung a 10,Mobiles/Samsung/Samsung a 10
+7,Oppo,Oppo Youth 2,Oppo Youth 2,<p>asd</p>,,,,,,,,,,,PRODUCTS_AND_PAGE,,black.img,,1,,aaa,bbb,ccc,,,,Oppo Youth 2,Mobiles/Oppo/Oppo Youth 2
+8,Oppo,Oppo k1,Oppo k1,<p>asd</p>,,,,,,,,,,,PRODUCTS_AND_PAGE,,black.img,,1,,aaa,bbb,ccc,,,,Oppo k1,Mobiles/Oppo/Oppo k1
+9,Vivo,Vivo v5 plus,Vivo v5 plus,<p>asd</p>,,,,,,,,,,,PRODUCTS_AND_PAGE,,black.img,,1,,aaa,bbb,ccc,,,,Vivo v5 plus,Mobiles/Vivo/Vivo v5 plus
+10,Vivo,Vivo v9,Vivo v9,<p>asd</p>,,,,,,,,,,,PRODUCTS_AND_PAGE,,black.img,,1,,aaa,bbb,ccc,,,,Vivo v9,Mobiles/Vivo/Vivo v9

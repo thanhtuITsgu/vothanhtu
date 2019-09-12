@@ -209,29 +209,6 @@ class CustomImport extends \Magento\ImportExport\Model\Import\Entity\AbstractEnt
         $listTitle = [];
         while ($bunch = $this->_dataSourceModel->getNextBunch()) {
             foreach ($bunch as $rowNum => $rowData) {
-
-                /*if (\Magento\ImportExport\Model\Import::BEHAVIOR_REPLACE== $behavior) {
-                    if ($this->validateRow($rowData, $rowNum)) {
-                        $source = $review->getCollection()->addFieldToFilter('title', $rowData['title'])->getData();
-                        foreach ($source as $key => $value) {
-                            $review->load($value['review_id']);
-                            $review->delete();
-                            $review->save();
-                        }
-                        $data = $review->setEntityId($review->getEntityIdByCode(\Magento\Review\Model\Review::ENTITY_PRODUCT_CODE))
-                            ->setEntityPkValue($rowData['product_id'])
-                            ->setStatusId($rowData['status'])
-                            ->setCreatedAt($rowData['create_at'])
-                            ->setData('nickname', $rowData['nickname'])
-                            ->setData('title', $rowData['title'])
-                            ->setData('detail', $rowData['detail'])
-                            ->setData('store_id', $rowData['store_id'])
-                            ->setStores([$this->storeID]);
-                        $this->reviewResource->save($data);
-                        $review->unsetData(); // de xoa Data trong Review['Data'] sau moi lan them !!!
-                    }
-                }*/
-
                 if (\Magento\ImportExport\Model\Import::BEHAVIOR_APPEND == $behavior) {
                     if ($this->validateRow($rowData, $rowNum)) {
                         $source = $review->setEntityId($review->getEntityIdByCode(\Magento\Review\Model\Review::ENTITY_PRODUCT_CODE))
@@ -262,29 +239,6 @@ class CustomImport extends \Magento\ImportExport\Model\Import\Entity\AbstractEnt
         $listTitle = [];
         while ($bunch = $this->_dataSourceModel->getNextBunch()) {
             foreach ($bunch as $rowNum => $rowData) {
-
-                /*if (\Magento\ImportExport\Model\Import::BEHAVIOR_REPLACE== $behavior) {
-                    if ($this->validateRow($rowData, $rowNum)) {
-                        $source = $review->getCollection()->addFieldToFilter('title', $rowData['title'])->getData();
-                        foreach ($source as $key => $value) {
-                            $review->load($value['review_id']);
-                            $review->delete();
-                            $review->save();
-                        }
-                        $data = $review->setEntityId($review->getEntityIdByCode(\Magento\Review\Model\Review::ENTITY_PRODUCT_CODE))
-                            ->setEntityPkValue($rowData['product_id'])
-                            ->setStatusId($rowData['status'])
-                            ->setCreatedAt($rowData['create_at'])
-                            ->setData('nickname', $rowData['nickname'])
-                            ->setData('title', $rowData['title'])
-                            ->setData('detail', $rowData['detail'])
-                            ->setData('store_id', $rowData['store_id'])
-                            ->setStores([$this->storeID]);
-                        $this->reviewResource->save($data);
-                        $review->unsetData(); // de xoa Data trong Review['Data'] sau moi lan them !!!
-                    }
-                }*/
-
                     if ($this->validateRow($rowData, $rowNum)) {
                         $source = $review->setEntityId($review->getEntityIdByCode(\Magento\Review\Model\Review::ENTITY_PRODUCT_CODE))
                             ->setEntityPkValue($rowData['product_id'])
@@ -351,88 +305,6 @@ class CustomImport extends \Magento\ImportExport\Model\Import\Entity\AbstractEnt
         }
         return $this;
     }
-    /*protected function saveAndReplaceEntityReplate()
-    {
-        $review = $this->reviewFactory->create();
-        $temp = 0;
-        $behavior = $this->getBehavior();
-        $listTitle = [];
-        while ($bunch = $this->_dataSourceModel->getNextBunch()) {
-            foreach ($bunch as $rowNum => $rowData) {
-                    if ($this->validateRow($rowData, $rowNum)) {
-                        $source = $review->getCollection()->addFieldToFilter('title', $rowData['title'])->getData();
-                        foreach ($source as $key => $value) {
-                            $review->load($value['review_id']);
-                            $review->delete();
-                            $review->save();
-                        }
-                    $data = $review->setEntityId($review->getEntityIdByCode(\Magento\Review\Model\Review::ENTITY_PRODUCT_CODE))
-                        ->setEntityPkValue($rowData['product_id'])
-                        ->setStatusId($rowData['status'])
-                        ->setCreatedAt($rowData['create_at'])
-                        ->setData('nickname', $rowData['nickname'])
-                        ->setData('title', $rowData['title'])
-                        ->setData('detail', $rowData['detail'])
-                        ->setData('store_id', $rowData['store_id'])
-                        ->setStores([$this->storeID]);
-                    $this->reviewResource->save($data);
-                    $review->unsetData(); // de xoa Data trong Review['Data'] sau moi lan them !!!
-                    $temp++;
-                }
-            }
-        }
-        return $this;
-    }*/
-
-
-    public function validateDataImport($params, $rowNum)
-    {
-
-        $Temp = true;
-        foreach ($params as $key => $data) {
-            if ($data == "") {
-                $params[$key] = null;
-            }
-        }
-
-        /*if ($this->emailValid($params['email']) == false)
-        {
-            $this->errorMessageTemplates(__('The Email %1 invalid. Please use other Email', $params['email']));
-            $valid = false;
-        }*/
-
-        if (!isset($params['sku'],
-            $params['email'],
-            $params['nickname'],
-            $params['detail'],
-            $params['title'],
-            $params['create_at'],
-            $params['status'])) {
-            $Temp = false;
-            $this->addRowError(ValidatorInterface::ERROR_ROW, $rowNum);
-        } else {
-
-            /*//check nickname exist ?
-$existAddressLocation = $model
-->getCollection()
-->addFieldToFilter('nickname', $params['nickname']);
-if (count($existAddressLocation) > 0) {
-$this->messageManager->addErrorMessage(__('The Nickname %1 already exist. Please use other Nickname', $params['nickname']));
-$valid = false;
-}*/
-
-            //check product_id ( entity_id )
-
-            $productFactory = $this->productCollectionFactory->create()
-                ->getCollection()
-                ->addFieldToFilter('entity_id', $params['product_id']);
-            if (count($productFactory) == 0) {
-                $this->addRowError(ValidatorInterface::ERROR_PRODUCT_ID_INVALID, $rowNum);
-                $Temp = false;
-            }
-        }
-        return $Temp;
-    }
 
     /**
      * Save message to customtable.
@@ -451,10 +323,4 @@ $valid = false;
         return $this;
     }
 
-    /*public function emailValid($string)
-    {
-        if (preg_match ("/^([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+\.[A-Za-z]{2,6}$/", $string))
-            return true;
-        return false;
-    }*/
 }
