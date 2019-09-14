@@ -1,5 +1,5 @@
 <?php
-namespace Magenest\ImportCategory\Model\Import\CustomImport;
+namespace Magenest\ImportCategory\Model\Import\CategoryImport;
 interface RowValidatorInterface extends \Magento\Framework\Validator\ValidatorInterface
 {
     const ERROR_INVALID_TITLE= 'InvalidValueTITLE';

@@ -2,46 +2,46 @@
 
 namespace Magenest\ImportCategory\Model\Import;
 
-use Magenest\ImportCategory\Model\Import\CustomImport\RowValidatorInterface as ValidatorInterface;
+use Magenest\ImportCategory\Model\Import\CategoryImport\RowValidatorInterface as ValidatorInterface;
 use Magento\ImportExport\Model\Import\ErrorProcessing\ProcessingErrorAggregatorInterface;
 
-class CustomImport extends \Magento\ImportExport\Model\Import\Entity\AbstractEntity
+use Magento\Framework\App\ObjectManager;
+use Magento\Framework\App\ResourceConnection;
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Serialize\Serializer\Json;
+use Magento\ImportExport\Model\Import\AbstractSource;
+use Magento\ImportExport\Model\Import as ImportExport;
+use Magento\ImportExport\Model\Import\ErrorProcessing\ProcessingError;
+
+class CategoryImport extends \Magento\ImportExport\Model\Import\Entity\AbstractEntity
 {
     const id = 'id';
-    const parent_id = 'parent_id';
     const parent_name = 'parent_name';
     const name = 'name';
-    const sku = 'sku';
     const description = 'description';
-
     const all_children= 'all_children';
     const available_sort_by= 'available_sort_by';
     const children= 'children';
     const children_count= 'children_count';
     const custom_apply_to_products= 'custom_apply_to_products';
-
     const custom_design= 'custom_design';
     const custom_design_from= 'custom_design_from';
     const custom_design_to= 'custom_design_to';
     const custom_layout_update= 'custom_layout_update';
     const default_sort_by= 'default_sort_by';
-
     const display_mode= 'display_mode';
     const filter_price_range= 'filter_price_range';
     const image= 'image';
     const is_anchor= 'is_anchor';
     const landing_page= 'landing_page';
-
     const level= 'level';
     const meta_description= 'meta_description';
     const meta_keywords= 'meta_keywords';
     const meta_title= 'meta_title';
     const page_layout= 'page_layout';
-
-    const path= 'path';
-    const path_in_store= 'path_in_store';
     const url_key= 'url_key';
     const url_path= 'url_path';
+
 
 
 
@@ -73,12 +73,9 @@ class CustomImport extends \Magento\ImportExport\Model\Import\Entity\AbstractEnt
      */
     protected $validColumnNames = [
         self::id,
-        self::parent_id,
-        self::name,
-        self::sku,
         self::parent_name,
+        self::name,
         self::description,
-
         self::all_children,
         self::available_sort_by,
         self::children,
@@ -89,7 +86,6 @@ class CustomImport extends \Magento\ImportExport\Model\Import\Entity\AbstractEnt
         self::custom_design_to,
         self::custom_layout_update,
         self::default_sort_by,
-
         self::display_mode,
         self::filter_price_range,
         self::image,
@@ -100,9 +96,6 @@ class CustomImport extends \Magento\ImportExport\Model\Import\Entity\AbstractEnt
         self::meta_keywords,
         self::meta_title,
         self::page_layout,
-
-        self::path,
-        self::path_in_store,
         self::url_key,
         self::url_path,
     ];
@@ -127,6 +120,7 @@ class CustomImport extends \Magento\ImportExport\Model\Import\Entity\AbstractEnt
     protected $_connection;
     protected $_resource;
 
+    private $serializer;
     /**
      * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
      */
@@ -286,8 +280,8 @@ class CustomImport extends \Magento\ImportExport\Model\Import\Entity\AbstractEnt
                                     "meta_keywords" => $rowData['meta_keywords'],
                                     "meta_title" => $rowData['meta_title'],
                                     "page_layout" => $rowData['page_layout'],
-                                    "path" => $rowData['path'],
-                                    "path_in_store" => $rowData['path_in_store'],
+                                   /* "path" => $rowData['path'],
+                                    "path_in_store" => $rowData['path_in_store'],*/
                                     "url_key" => $rowData['url_key'],
                                     "url_path" => $rowData['url_path'],
                                 ]];
@@ -323,8 +317,8 @@ class CustomImport extends \Magento\ImportExport\Model\Import\Entity\AbstractEnt
                                 "meta_keywords" => $rowData['meta_keywords'],
                                 "meta_title" => $rowData['meta_title'],
                                 "page_layout" => $rowData['page_layout'],
-                                "path" => $rowData['path'],
-                                "path_in_store" => $rowData['path_in_store'],
+                            /*    "path" => $rowData['path'],
+                                "path_in_store" => $rowData['path_in_store'],*/
                                 "url_key" => $rowData['url_key'],
                                 "url_path" => $rowData['url_path'],
                             ]];
@@ -390,6 +384,83 @@ class CustomImport extends \Magento\ImportExport\Model\Import\Entity\AbstractEnt
                 }
             }
         }
+        return $this;
+    }
+
+    protected function _getSource()
+    {
+        if (!$this->_source) {
+            throw new LocalizedException(__('Please specify a source.'));
+        }
+        return $this->_source;
+    }
+
+    private function getSerializer()
+    {
+        if (null === $this->serializer) {
+            $this->serializer = ObjectManager::getInstance()->get(Json::class);
+        }
+        return $this->serializer;
+    }
+
+    protected function _saveValidatedBunches()
+    {
+        $source = $this->_getSource();
+        $currentDataSize = 0;
+        $bunchRows = [];
+        $startNewBunch = false;
+        $nextRowBackup = [];
+        $maxDataSize = $this->_resourceHelper->getMaxDataSize();
+        $bunchSize = $this->_importExportData->getBunchSize();
+        $skuSet = [];
+
+        $source->rewind();
+        $this->_dataSourceModel->cleanBunches();
+
+        while ($source->valid() || $bunchRows) {
+            if ($startNewBunch || !$source->valid()) {
+                $this->_dataSourceModel->saveBunch($this->getEntityTypeCode(), $this->getBehavior(), $bunchRows);
+
+                $bunchRows = $nextRowBackup;
+                $currentDataSize = strlen($this->getSerializer()->serialize($bunchRows));
+                $startNewBunch = false;
+                $nextRowBackup = [];
+            }
+            if ($source->valid()) {
+                try {
+                    $rowData = $source->current();
+                    if (array_key_exists('sku', $rowData)) {
+                        $skuSet[$rowData['sku']] = true;
+                    }
+                } catch (\InvalidArgumentException $e) {
+                    $this->addRowError($e->getMessage(), $this->_processedRowsCount);
+                    $this->_processedRowsCount++;
+                    $source->next();
+                    continue;
+                }
+
+                $this->_processedRowsCount++;
+
+                if ($this->validateRow($rowData, $source->key())) {
+                    // add row to bunch for save
+                    $rowData = $this->_prepareRowForDb($rowData);
+                    $rowSize = strlen($this->jsonHelper->jsonEncode($rowData));
+
+                    $isBunchSizeExceeded = $bunchSize > 0 && count($bunchRows) >= $bunchSize;
+
+                    if ($currentDataSize + $rowSize >= $maxDataSize || $isBunchSizeExceeded) {
+                        $startNewBunch = true;
+                        $nextRowBackup = [$source->key() => $rowData];
+                    } else {
+                        $bunchRows[$source->key()] = $rowData;
+                        $currentDataSize += $rowSize;
+                    }
+                }
+                $source->next();
+            }
+        }
+        $this->_processedEntitiesCount = (count($skuSet)) ? : $this->_processedRowsCount;
+
         return $this;
     }
 }
