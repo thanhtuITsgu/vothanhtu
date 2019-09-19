@@ -45,7 +45,6 @@
                     <frontend_model>Magenest\Movie\Block\System\Config\Form\Button</frontend_model>
                 </field>
             </group>
-
         </section>
     </system>
 </config>

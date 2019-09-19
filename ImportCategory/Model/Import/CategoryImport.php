@@ -4,7 +4,6 @@ namespace Magenest\ImportCategory\Model\Import;
 
 use Magenest\ImportCategory\Model\Import\CategoryImport\RowValidatorInterface as ValidatorInterface;
 use Magento\ImportExport\Model\Import\ErrorProcessing\ProcessingErrorAggregatorInterface;
-
 use Magento\Framework\App\ObjectManager;
 use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\Exception\LocalizedException;
@@ -19,34 +18,33 @@ class CategoryImport extends \Magento\ImportExport\Model\Import\Entity\AbstractE
     const parent_name = 'parent_name';
     const name = 'name';
     const description = 'description';
-    const all_children= 'all_children';
-    const available_sort_by= 'available_sort_by';
-    const children= 'children';
-    const children_count= 'children_count';
-    const custom_apply_to_products= 'custom_apply_to_products';
-    const custom_design= 'custom_design';
-    const custom_design_from= 'custom_design_from';
-    const custom_design_to= 'custom_design_to';
-    const custom_layout_update= 'custom_layout_update';
-    const default_sort_by= 'default_sort_by';
-    const display_mode= 'display_mode';
-    const filter_price_range= 'filter_price_range';
-    const image= 'image';
-    const is_anchor= 'is_anchor';
-    const landing_page= 'landing_page';
-    const level= 'level';
-    const meta_description= 'meta_description';
-    const meta_keywords= 'meta_keywords';
-    const meta_title= 'meta_title';
-    const page_layout= 'page_layout';
-    const url_key= 'url_key';
-    const url_path= 'url_path';
-
-
-
-
-
-
+    const all_children = 'all_children';
+    const available_sort_by = 'available_sort_by';
+    const children = 'children';
+    const children_count = 'children_count';
+    const custom_apply_to_products = 'custom_apply_to_products';
+    const custom_design = 'custom_design';
+    const custom_design_from = 'custom_design_from';
+    const custom_design_to = 'custom_design_to';
+    const custom_layout_update = 'custom_layout_update';
+    const default_sort_by = 'default_sort_by';
+    const display_mode = 'display_mode';
+    const filter_price_range = 'filter_price_range';
+    const image = 'image';
+    const is_anchor = 'is_anchor';
+    const landing_page = 'landing_page';
+    const level = 'level';
+    const meta_description = 'meta_description';
+    const meta_keywords = 'meta_keywords';
+    const meta_title = 'meta_title';
+    const page_layout = 'page_layout';
+    const url_key = 'url_key';
+    const url_path = 'url_path';
+    const is_active = 'is_active';
+    const position = 'position';
+    const include_in_menu = 'include_in_menu';
+    const test = 'test';
+    const abcdez = 'abcdez';
     /**
      * Validation failure message template definitions
      *
@@ -98,6 +96,11 @@ class CategoryImport extends \Magento\ImportExport\Model\Import\Entity\AbstractE
         self::page_layout,
         self::url_key,
         self::url_path,
+        self::is_active,
+        self::position,
+        self::include_in_menu,
+        self::test,
+        self::abcdez,
     ];
     /**
      * Need to log in import history
@@ -121,6 +124,7 @@ class CategoryImport extends \Magento\ImportExport\Model\Import\Entity\AbstractE
     protected $_resource;
 
     private $serializer;
+
     /**
      * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
      */
@@ -153,7 +157,7 @@ class CategoryImport extends \Magento\ImportExport\Model\Import\Entity\AbstractE
         $this->storeID = $storeManager->getStore()->getId();
         $this->productCollectionFactory = $productCollectionFactory;
         $this->messageManager = $messageManager;
-        $this->categoryModel = $categoryModel ;
+        $this->categoryModel = $categoryModel;
         $this->_repository = $repository;
     }
 
@@ -185,12 +189,12 @@ class CategoryImport extends \Magento\ImportExport\Model\Import\Entity\AbstractE
             return !$this->getErrorAggregator()->isRowInvalid($rowNum);
         }
         /*Test Name category co trong model category khong*/
-      /*  $productFactory = $this->categoryFactory->create()
-            ->getCollection()
-            ->addAttributeToFilter('name', $params['name']);
-        if (count($productFactory) != 0) {
-            $this->addRowError(ValidatorInterface::ERROR_NAME_INVALID, $rowNum);
-        }*/
+        /*  $productFactory = $this->categoryFactory->create()
+              ->getCollection()
+              ->addAttributeToFilter('name', $params['name']);
+          if (count($productFactory) != 0) {
+              $this->addRowError(ValidatorInterface::ERROR_NAME_INVALID, $rowNum);
+          }*/
         return !$this->getErrorAggregator()->isRowInvalid($rowNum);
     }
 
@@ -248,127 +252,24 @@ class CategoryImport extends \Magento\ImportExport\Model\Import\Entity\AbstractE
     {
         while ($bunch = $this->_dataSourceModel->getNextBunch()) {
             foreach ($bunch as $rowNum => $rowData) {
-                    if ($this->validateRow($rowData, $rowNum)) {
-                        if($rowNum==0) {
-                            $colection = $this->categoryFactory->create()->getCollection()->addAttributeToFilter('name',$rowData['name'])->setPageSize(1);
-                            if ($colection->getData() == null) {
-                                $data = $this->categoryFactory->create()->getCollection()->addAttributeToFilter('name','Bag')->setPageSize(1);
-                                $parent_id_old = $data->getFirstItem()->getId();
-                                $data = ['data' => ["parent_id" => $parent_id_old,
-                                    'name' => $rowData['name'],
-                                    'description' => $rowData['description'],
-                                    "is_active" => true,
-                                    "position" => 10,
-                                    "include_in_menu" => true,
-                                    "all_children" => $rowData['all_children'],
-                                    "available_sort_by" => $rowData['available_sort_by'],
-                                    "children" => $rowData['children'],
-                                    "children_count" => $rowData['children_count'],
-                                    "custom_apply_to_products" => $rowData['custom_apply_to_products'],
-                                    "custom_design" => $rowData['custom_design'],
-                                    "custom_design_from" => $rowData['custom_design_from'],
-                                    "custom_design_to" => $rowData['custom_design_to'],
-                                    "custom_layout_update" => $rowData['custom_layout_update'],
-                                    "default_sort_by" => $rowData['default_sort_by'],
-                                    "display_mode" => $rowData['display_mode'],
-                                    "filter_price_range" => $rowData['filter_price_range'],
-                                    "image" => $rowData['image'],
-                                    "is_anchor" => $rowData['is_anchor'],
-                                    "landing_page" => $rowData['landing_page'],
-                                    "level" => $rowData['level'],
-                                    "meta_description" => $rowData['meta_description'],
-                                    "meta_keywords" => $rowData['meta_keywords'],
-                                    "meta_title" => $rowData['meta_title'],
-                                    "page_layout" => $rowData['page_layout'],
-                                   /* "path" => $rowData['path'],
-                                    "path_in_store" => $rowData['path_in_store'],*/
-                                    "url_key" => $rowData['url_key'],
-                                    "url_path" => $rowData['url_path'],
-                                ]];
-                                $category=$this->categoryFactory->create($data);
-                                $this->_repository->save($category);
-                            }
-                        }else {
-                            $colection = $this->categoryFactory->create()->getCollection()->addAttributeToFilter('name',$rowData['parent_name'])->setPageSize(1);
-                            $parent_id = $colection->getFirstItem()->getId();
-                            $data = ['data' => ["parent_id" => $parent_id,
-                                'name' => $rowData['name'],
-                                'description' => $rowData['description'],
-                                "is_active" => true,
-                                "position" => 10,
-                                "include_in_menu" => true,
-                                "all_children" => $rowData['all_children'],
-                                "available_sort_by" => $rowData['available_sort_by'],
-                                "children" => $rowData['children'],
-                                "children_count" => $rowData['children_count'],
-                                "custom_apply_to_products" => $rowData['custom_apply_to_products'],
-                                "custom_design" => $rowData['custom_design'],
-                                "custom_design_from" => $rowData['custom_design_from'],
-                                "custom_design_to" => $rowData['custom_design_to'],
-                                "custom_layout_update" => $rowData['custom_layout_update'],
-                                "default_sort_by" => $rowData['default_sort_by'],
-                                "display_mode" => $rowData['display_mode'],
-                                "filter_price_range" => $rowData['filter_price_range'],
-                                "image" => $rowData['image'],
-                                "is_anchor" => $rowData['is_anchor'],
-                                "landing_page" => $rowData['landing_page'],
-                                "level" => $rowData['level'],
-                                "meta_description" => $rowData['meta_description'],
-                                "meta_keywords" => $rowData['meta_keywords'],
-                                "meta_title" => $rowData['meta_title'],
-                                "page_layout" => $rowData['page_layout'],
-                            /*    "path" => $rowData['path'],
-                                "path_in_store" => $rowData['path_in_store'],*/
-                                "url_key" => $rowData['url_key'],
-                                "url_path" => $rowData['url_path'],
-                            ]];
-                            $category=$this->categoryFactory->create($data);
-                            $this->_repository->save($category);
-                        }
-                    }
-            }
-        }
-        return $this;
-    }
-
-  /*  protected function ReplaceEntity()
-    {
-        while ($bunch = $this->_dataSourceModel->getNextBunch()) {
-            foreach ($bunch as $rowNum => $rowData) {
                 if ($this->validateRow($rowData, $rowNum)) {
-                    if($rowNum==0) {
-                        $colection = $this->categoryFactory->create()->getCollection()->addAttributeToFilter('name',$rowData['name'])->setPageSize(1);
-                        if ($colection->getData() == null) {
-                            $data = $this->categoryFactory->create()->getCollection()->addAttributeToFilter('name','Bag')->setPageSize(1);
-                            $parent_id_old = $data->getFirstItem()->getId();
-                            $data = ['data' => ["parent_id" => $parent_id_old,
-                                'name' => $rowData['name'],
-                                'description' =>$rowData['description'],
-                                "is_active" => true,
-                                "position" => 10,
-                                "include_in_menu" => true,
-                            ]];
-                            $category=$this->categoryFactory->create($data);
-                            $this->_repository->save($category);
-                        }
-                    }else {
-                        $colection = $this->categoryFactory->create()->getCollection()->addAttributeToFilter('name',$rowData['parent_name'])->setPageSize(1);
+                    {
+                        $colection = $this->categoryFactory->create()->getCollection()->addAttributeToFilter('name', $rowData['parent_name']);
                         $parent_id = $colection->getFirstItem()->getId();
-                        $data = ['data' => ["parent_id" => $parent_id,
-                            'name' => $rowData['name'],
-                            'description' =>$rowData['description'],
-                            "is_active" => true,
-                            "position" => 10,
-                            "include_in_menu" => true,
-                        ]];
-                        $category=$this->categoryFactory->create($data);
+                        $data = ['data' => ["parent_id" => $parent_id]];
+                        foreach ($rowData as $key => $value) {
+                            if ($key != 'id' && $key != 'parent_name') {
+                                $data['data'][$key] = $value;
+                            }
+                        }
+                        $category = $this->categoryFactory->create($data);
                         $this->_repository->save($category);
                     }
                 }
             }
         }
         return $this;
-    }*/
+    }
 
     protected function saveAndDeleteEntity()
     {
@@ -459,7 +360,7 @@ class CategoryImport extends \Magento\ImportExport\Model\Import\Entity\AbstractE
                 $source->next();
             }
         }
-        $this->_processedEntitiesCount = (count($skuSet)) ? : $this->_processedRowsCount;
+        $this->_processedEntitiesCount = (count($skuSet)) ?: $this->_processedRowsCount;
 
         return $this;
     }
